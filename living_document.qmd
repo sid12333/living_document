@@ -1,0 +1,228 @@
+---
+title: "Collaborative Guide: Quarto, Git, and Project Work"
+author: "Contributors from [Course Name]"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-summary: "Show code"
+    number-sections: true
+    theme: cosmo
+    page-layout: full
+    self-contained: true
+editor: source
+---
+
+# Introduction
+
+Welcome to our class's collaborative guide! This living document was created by students to collect useful practices, workflows, and tips for writing Quarto documents, collaborating with Git, and organizing projects.
+
+It will evolve as we work on it together, and serve as a reference for your group projects.
+
+---
+
+# Authoring with Quarto
+
+## Anatomy of a Quarto Report
+<!-- TODOs: metadata header, sections, layout options, customization -->
+
+## Basic Formatting & Markdown
+<!-- TODOs: headings, lists, emphasis, code blocks, links, footnotes -->
+
+## Code Cells and Quarto Options
+<!-- TODOs: basic chunk, inline code, echo, chunk options -->
+
+## Images and Plots
+<!-- TODOs: inserting local images, captions, figure sizing, code-generated plots -->
+
+## Tables
+<!-- TODOs: markdown tables, knitr::kable(), comparison -->
+
+## Citations and Bibliography
+<!-- TODOs: .bib file usage, citation styles, Zotero integration -->
+
+---
+
+# Git and Collaborative Workflows
+
+## Branching and Merge Requests
+<!-- TODOs: branch creation, MR checklists, communication -->
+
+## GitHub Desktop
+<!-- TODOs: clone, commit, push, sync conflicts -->
+
+
+## Best Practices
+<!-- TODOs: shared tips, helpful links -->
+
+---
+
+# Project Organization
+
+## Project Structure
+
+Use the following basic template for your project
+
+```md
+project_name/              # <1>
+├── data/                # <2>
+├── R/                   # <3>
+├── outputs/             # <4>
+│   ├── images/
+│   ├── tables/
+│   └── .../
+├── .gitignore           # <5>
+├── _quarto.yml          # <6>
+├── report.qmd           # <7>
+├── worklog.md           # <8>
+├── README.md            # <9>
+└── project_name.Rproj   # <10>
+```
+1. Project name
+2. Original data used by your project
+3. R scripts for functions and utilities, as well as setup code
+4. All outputs are stored here, with nested folders for images, data, etc. as needed
+5. Git ignore list (configured to skip temporary files)
+6. Quarto configuration file — defines output format, theme, and other global settings
+7. The main project report (Quarto Markdown)
+8. Worklog tracking project member contributions
+9. Project description and instructions
+10. RStudio Project file (if using)
+
+## General Guidelines
+
+- Use RStudio Projects (or similar tool) to organize your project
+- Use GitHub issues, branches, and structured communication channels to organize your work
+  - Establish project roles and responsibilities
+  - Maintain the worklog to track your contributions
+  - Have one `main` branch to represent the latest "clean" work you did
+  - Use a single meta-issue to track project progress
+- Use descriptive, consistent file names
+  - Use `snake_case`, avoid spaces or other special characters in file names
+  - Use numerical prefixes (e.g. `01_load_data.R`, `02_clean_data.R`) if scripts need to be executed in particular order
+  - Use `.gitignore` to exclude temporary files that do not need to be versioned
+  - Add `.Rhistory`, `.Rproj.user`, and large intermediate results (e.g. model caches) to `.gitignore`
+- Organize your code
+  - Prefer short, focused chunks with clear purpose
+  - Put large analyses and common utilities into separate scripts (to be stored in `R/`)
+- Never modify raw data files directly
+  - Use spatial separation for generated files (i.e. `outputs/`)
+- Document everything
+  - Create a detailed README with project overview, dependencies, and instructions
+  - Comment your code thoroughly
+  - Document data sources (version, license, how the data was fetched, etc.)
+  - Include a data dictionary (brief structured explanation of all data you use)
+  - Document decisions and assumptions
+- Aim for reproducibility
+  - Document the packages you use (and how you use them)
+  - Always use project-relative file paths (e.g. `data/data.csv` instead of `/Users/taras/Projects/my_project/data`)
+  - Make sure that the code runs on all your machines
+
+
+---
+
+# Coding Style Guide
+
+Good coding style makes your code easier to read, share, and revisit later. The goal is clarity and consistency. This section outlines some simple style rules to follow in our group projects.
+
+## Coding Style
+
+**Structure**
+
+- Use **two-space indentation** — this keeps things compact and readable
+- Use the **pipe operator (`|>`)** to break operations into clear steps
+- Every **dplyr predicate** (like `filter()`, `mutate()`) should start on a **new line**.
+- For long function calls, put each argument on a separate line, with indentation.
+
+**Variables**
+
+- All names should be self-explanatory, be as verbose as necessary (e.g. `penguins_stats_summary` instead of `pgs`)
+- Use **snake_case** for all variable and function names (e.g., `penguin_data`, `filter_species()`)
+- Use different variable names for different data
+
+**Code Chunks**
+
+- Chunks should be compact and focused — ideally under 10–15 lines
+- Avoid “dead code” — don’t include code that isn’t used or explained
+- Large, reusable functions or repeated logic should be outsourced to a shared script (e.g., `R/helpers.R`)
+- Every chunk should fulfill a clear purpose, and its role should be obvious from the context or accompanying comments
+
+**Comments**
+
+- Use comments to explain why something is being done — not just what
+- Avoid repeating the code in your comment
+- Place comments above or beside logical steps to improve clarity
+- Use comment markers (e.g. `# TODO: `, `# CHECK: `) to call attention to things that need to be done
+
+## Example
+
+```r
+#| echo: true
+#| eval: false
+# survey Adelie penguins across the islands                            # <1>
+# note: we need to make sure that we remove all empty (NA) entries
+penguin_adelie_stats <- penguins |>                                    # <2>
+  filter(                                                              # <3>
+    !is.na(bill_length_mm),
+    !is.na(body_mass_g),
+    species == "Adelie"
+  ) |>                                                                 # <4>
+  summarize(
+    avg_bill_length = mean(bill_length_mm),
+    # centroid_mass() calculates the centroid mass (see discussion),   # <5>
+    # and is defined in R/centroids.R
+    centroid_body_mass = centroid_mass(body_mass_g),
+    .by = island
+  )
+```
+1. Clear comment, explains the purpose of the code
+2. Verbose, self-documenting variable name
+3. Each function call on a separate line, grouped by consitent indentation
+4. Use pipe operator to chain transformations
+5. Custom function defined in an external script, with a guiding comment
+
+---
+
+# Plotting Best Practices
+<!-- TODOs: color schemes, labeling, readability, theme customization -->
+
+---
+
+#  AI Usage Guidelines
+
+## General Principles
+
+- **Transparency**: Always disclose AI usage in your work
+- **Responsibility**: You are responsible for all content, even if AI-assisted
+- **Learning Focus**: Use AI as a tool to enhance learning, not replace it
+
+## Suggested Best Practices
+
+- Use AI for brainstorming
+- Ask AI to explain concepts you don't understand
+- Have AI review your work for clarity and structure
+- Avoid using AI to generate complete solutions without understanding
+
+## Further Resounces
+
+- [UZH AI Guidelines](https://www.uzh.ch/en/explore/basics/ai.html)
+
+---
+
+
+# Extra Tips and Tricks
+<!-- TODOs: VSCode setup for Quarto/RMarkdown etc. -->
+
+---
+
+# Further Resources
+
+Here are some useful official resources to explore:
+
+- [Quarto Documentation](https://quarto.org/docs/)
+- [GitHub Docs: Branches](https://docs.github.com/en/get-started/quickstart/github-flow)
+- [GitHub Desktop Documentation](https://docs.github.com/en/desktop)
+- [Happy Git with R](https://happygitwithr.com/)
+
+Feel free to add more helpful links as we go!
