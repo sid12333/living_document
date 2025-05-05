@@ -229,7 +229,7 @@ kable(
 
 # Git and Collaborative Workflows
 <!-- Write a brief guide on resolving merge conflicts #19 -->
-Conflict 11
+Conflict 1111
 
 ## Branching and Merge Requests
 <!-- TODOs: branch creation, MR checklists, communication -->
