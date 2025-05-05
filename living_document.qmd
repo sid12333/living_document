@@ -109,7 +109,119 @@ For more formatting options, see the [Quarto Markdown Basics documentation](http
 
 ## Tables
 <!-- TODOs: markdown tables, knitr::kable(), comparison -->
+### Quarto Markdown Table
 
+**Markdown Source and Display**
+
+```` markdown
+| Default | Left | Right | Center |
+|---------|:-----|------:|:------:|
+| 12      | 12   |    12 |   12   |
+| 123     | 123  |   123 |  123   |
+| 1       | 1    |     1 |   1    |
+
+: Demonstration of pipe table syntax {#tbl-syntax .striped .hover}
+````
+
+| Default | Left | Right | Center |
+|---------|:-----|------:|:------:|
+| 12      | 12   |    12 |   12   |
+| 123     | 123  |   123 |  123   |
+| 1       | 1    |     1 |   1    |
+
+: Demonstration of pipe table syntax {#tbl-syntax .striped .hover}
+
+
+
+-   **Basic syntax**
+    -   Pipe tables use `|` to indicate column boundary, at least three dashes `---` to define the header row and a line starting with `:` after the table to add a caption.
+-   **A header row is required**
+    -   You can simulate a "headerless" table by using an empty header (e.g., `| | |`).
+-   **Leading and trailing pipes `|` are optional but pipes between all columns are necessary**
+    -   Example: `fruit|price` is valid.
+-   **Alignment in source code is just for readability**
+    -   Pipe characters need not to be vertically aligned. Uneven tables still render correctly.
+-   **Alignment type is set using colons `:` in the separator line**
+    -   Three alignment types are shown above: *Left (Default)*; *Right*; *Center*.
+-   **Relative column widths can be influenced by the number of dashes `---` in the separator line**
+    -   More dashes = wider column.
+    -   Example: `------|---` will make the first column approximately 2/3 width, the second 1/3.
+      - Alternative: `: Table Caption {tbl-colwidths="[67,33]"}`
+-   **Block elements are not allowed in table cells**
+    -   No paragraphs, lists, or multi-line content inside a cell.
+- **Add the Bootstrap classes after the table caption**
+  - Example: `:Table Caption {.hover .striped}`
+- **Cross-reference with `:Table Caption {#tbl-label}` and `@tbl-label`**
+  - Example: See `@tbl-syntax` -> See @tbl-syntax
+  
+*For more details, see the [Quarto documentation on tables](https://quarto.org/docs/authoring/tables.html).*
+
+
+
+### Creating Tables Programmatically with knitr::kable()
+
+`knitr::kable()` is a R function used to format data frames or matrices as clean, publication-ready tables in Markdown, HTML, or LaTeX outputs.
+
+**Syntax**
+
+```{r, echo=TRUE, eval=FALSE}
+kable(x, format, digits = getOption("digits"), row.names = NA,
+      col.names = NA, align, caption = opts_current$get("tab.cap"),
+      label = NULL, format.args = list(), escape = TRUE, ...)
+```
+
+| Argument       | Type                 | Description                                                                 |
+|----------------|----------------------|------------------------------------------------------------------------------|
+| `x`            | data.frame / matrix  | The data to be rendered as a table. Required.                             |
+| `format`       | character            | Output format: `"markdown"`, `"html"`, `"latex"`, etc. Usually auto-detected. |
+| `digits`       | integer              | Number of decimal places to display. Defaults to `getOption("digits")`.     |
+| `row.names`    | logical / `NA`       | Whether to include row names: `TRUE`, `FALSE`, or `NA` for auto-detect.     |
+| `col.names`    | character vector     | Custom column names for the table.                                          |
+| `align`        | character vector     | Column alignment: `"l"` (left), `"c"` (center), `"r"` (right).              |
+| `caption`      | character            | Table caption shown above the table.                                        |
+| `label`        | character            | Label used for cross-referencing (e.g., `@tbl-summary`).                    |
+| `format.args`  | list                 | Additional arguments passed to `format()`.                                  |
+| `escape`       | logical              | Escape special characters like `_`, `&`. Use `FALSE` to allow raw HTML/LaTeX. |
+| `...`          | —                    | Additional arguments passed to formatting methods.                          |
+
+**Example**
+
+```{r, warning=FALSE}
+library(knitr)
+# Create a data frame similar in structure to the markdown example
+data <- data.frame(
+  Default = c("12", "123", "1"),
+  Left = c("12", "123", "1"),
+  Right = c("12", "123", "1"),
+  Center = c("12", "123", "1")
+)
+# Generate the table using knitr::kable()
+# Set column alignment: left, left, right, and center
+# Add a caption to the table
+kable(
+  data,
+  align = c("l", "l", "r", "c"),
+  caption = "Table 1. Demonstration of knitr::kable() table with alignment"
+)
+```
+
+
+*For more details on using `knitr::kable()`, see the [R Markdown Cookbook – Section 6.5](https://bookdown.org/yihui/rmarkdown-cookbook/kable.html).*
+
+### Comparison: Quarto Markdown Table vs knitr::kable()
+
+| Feature | Quarto Markdown Table | `knitr::kable()` Table |
+|-----------------|----------------------------|----------------------------|
+| Syntax Style | Pure Markdown | R code chunk using `kable()` |
+| Data Source | Written manually | R data frame or matrix |
+| Captions Support | Yes (with `:...` line after the table) | Yes (`caption = "..."`) |
+| Auto Numbering | Yes | Yes |
+| Cross-referencing | Yes (e.g., `@tbl-id`) | Yes (with `label = "tbl-id"`) |
+| Output Formats | HTML, PDF, DOCX | HTML, PDF, DOCX |
+| Styling (basic) | Manual (using colons `:` for alignment) | Basic via `align = c("l", "r", ...)` |
+| Styling (advanced) | Limited | Supports `kableExtra`, `booktabs`, etc. |
+| Dynamic Content | No | Yes – generated from live R data |
+| Best For | Simple static tables or syntax demos | Data-driven tables, dynamic reports |
 ## Citations and Bibliography
 <!-- TODOs: .bib file usage, citation styles, Zotero integration -->
 
