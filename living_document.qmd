@@ -30,6 +30,77 @@ It will evolve as we work on it together, and serve as a reference for your grou
 ## Basic Formatting & Markdown
 <!-- TODOs: headings, lists, emphasis, code blocks, links, footnotes -->
 
+Show how to use basic text formatting (bold, italic, strikethrough) with examples #3 
+
+### Emphasis and Text Styles
+
+In Markdown and Quarto, text formatting is done by surrounding words or phrases with special symbols. This method makes formatting quick, consistent, and readable even in plain text. It also helps writers focus on content without relying on visual formatting tools.
+
+The most common symbols are asterisks `*` and tildes `~`. These symbols are placed directly before and after the text that should be formatted.
+
+#### Bold
+
+Bold text is created by placing double asterisks around a word or phrase.
+
+```markdown
+**This text is bold**
+```
+
+**This text is bold**
+
+#### Italic
+
+Italic text is created by placing single asterisks around the text. Italic can be used for emphasis, thoughts, or non-English terms.
+
+```markdown
+*This text is italic*
+```
+
+*This text is italic*
+
+#### Strikethrough
+
+Strikethrough text is created using double tildes. This format is useful for marking deletions or outdated information.
+
+```markdown
+~~This text is crossed out~~
+```
+
+~~This text is crossed out~~
+
+#### Combining Styles
+
+It is also possible to combine multiple formatting styles. For example:
+
+```markdown
+***bold and italic***
+```
+
+***bold and italic***
+
+```markdown
+**~~bold and strikethrough~~**
+```
+
+**~~bold and strikethrough~~**
+
+```markdown
+*~~italic and strikethrough~~*
+```
+
+*~~italic and strikethrough~~*
+
+When combining symbols, the order matters: the outermost symbols should match (for example, `**~~text~~**` is correct, while `*~text~*` is not).  
+Also make sure all opening symbols are properly closed — otherwise, the formatting might not render as expected.
+
+These combinations allow flexibility in tone:  
+- Use `***text***` when something is **important and personal**  
+- Use `**~~text~~**` when something was once important but is now removed  
+- Use `*~~text~~*` when marking a tentative or soft correction
+ 
+For more formatting options, see the [Quarto Markdown Basics documentation](https://quarto.org/docs/authoring/markdown-basics.html).
+
+
 ## Code Cells and Quarto Options
 <!-- TODOs: basic chunk, inline code, echo, chunk options -->
 
