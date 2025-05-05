@@ -229,6 +229,7 @@ kable(
 
 # Git and Collaborative Workflows
 
+Colflict!!!
 ## Branching and Merge Requests
 <!-- TODOs: branch creation, MR checklists, communication -->
 
