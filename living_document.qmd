@@ -223,13 +223,15 @@ kable(
 | Dynamic Content | No | Yes – generated from live R data |
 | Best For | Simple static tables or syntax demos | Data-driven tables, dynamic reports |
 ## Citations and Bibliography
-<!-- TODOs: .bib file usage, citation styles, Zotero integration -->
+<!-- TODOs: .bib file usage,sc citation styles, Zotero integration -->
 
 ---
 
 # Git and Collaborative Workflows
+<!-- Write a brief guide on resolving merge conflicts #19 -->
+Conflict 22
 
-Colflict!!!
+
 ## Branching and Merge Requests
 <!-- TODOs: branch creation, MR checklists, communication -->
 
