@@ -231,6 +231,12 @@ kable(
 <!-- Write a brief guide on resolving merge conflicts #19 -->
 Conflict 1111
 
+1. user A update line 232 in his branch and commit (Conflict 1111)
+2. user B update the same line in his branch and try to commit (Conflict 22222)
+3. User B will see a notification window in Github desktop to show the conflict as shown in conflict1.png. The conflict is shown between <<<<<<< and >>>>>>>, ">>>>>> conflict-example" is the branch name of User A.
+![Merge conflict_1](conflict1.png)
+4. User B delete the unwanted code, as shown in conflict2.png. Github desktop shows that the conflict is resolved and User B can continue to merge.
+![Merge conflict_2](conflict2.png)
 
 ## Branching and Merge Requests
 <!-- TODOs: branch creation, MR checklists, communication -->
